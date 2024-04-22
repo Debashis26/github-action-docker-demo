@@ -22,4 +22,12 @@ jobs:
 
      - name: Run node app
        run: node index.js
+
+     - name: Upload static site content
+       uses: actions/upload-artifact@v3
+       with:
+            name: my-artifact
+            path: .
      
+    
+   
