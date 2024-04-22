@@ -1,0 +1,16 @@
+
+name: My Build Workflow
+ 
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+     - name: Check Node.js version
+       run: node --version
+
+     
