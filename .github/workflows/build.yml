@@ -14,4 +14,12 @@ jobs:
      - name: Check Node.js version
        run: node --version
 
+     - name: Checkout code
+       uses: actions/checkout@v3
+       
+     - name: Install node packeges
+       run: npm install
+
+     - name: Run node app
+       run: node index.js
      
