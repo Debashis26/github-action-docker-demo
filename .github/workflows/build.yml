@@ -28,6 +28,23 @@ jobs:
        with:
             name: my-artifact
             path: .
-     
+
+  release:
+    name: build-release
+    runs-on: ubuntu-latest
+    container: node:14
+
+    steps:
+      - name: download static site content
+        uses: actions/download-artifact@v3
+        with:
+           name: my-artifact
+
+      - name: compress static site content
+        uses: thedoctor0/zip-release@master
+        with:
+          name: my-artifact.zip
+        
+
     
    
