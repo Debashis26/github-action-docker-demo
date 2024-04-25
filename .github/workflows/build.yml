@@ -42,9 +42,13 @@ jobs:
         with:
            name: my-artifact
 
+      
       - name: List downloaded artifact contents
         run: ls -R
-        
+
+      - name: Install zip
+        run: sudo apt-get update && sudo apt-get install -y zip
+
       - name: compress static site content
         uses: thedoctor0/zip-release@master
         with:
