@@ -47,7 +47,7 @@ jobs:
         run: ls -R
 
       - name: Install zip
-        run: sudo apt-get update && sudo apt-get install -y zip
+        run: apt-get update && apt-get install -y zip
 
       - name: compress static site content
         uses: thedoctor0/zip-release@master
