@@ -42,10 +42,13 @@ jobs:
         with:
            name: my-artifact
 
+      - name: List downloaded artifact contents
+        run: ls -R
+        
       - name: compress static site content
         uses: thedoctor0/zip-release@master
         with:
-          filename: my-artifact.zip
+          filename: my-artifact-test.zip
         
 
     
