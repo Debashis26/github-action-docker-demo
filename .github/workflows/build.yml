@@ -45,7 +45,7 @@ jobs:
       - name: compress static site content
         uses: thedoctor0/zip-release@master
         with:
-          name: my-artifact.zip
+          filename: my-artifact.zip
         
 
     
