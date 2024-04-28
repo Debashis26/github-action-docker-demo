@@ -103,7 +103,7 @@ name: Deploy Express App with Docker
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -127,4 +127,3 @@ jobs:
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/my-express-app:latest
-        
