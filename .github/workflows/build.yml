@@ -30,7 +30,6 @@ jobs:
             path: .
 
   release:
-
     name: build-release
     runs-on: ubuntu-latest
     needs: build-test
@@ -73,4 +72,15 @@ jobs:
           asset_name: my-artifact-v${{ github.run_number }}.zip
           asset_content_type: application/zip
     
-   
+  docker-build:
+    name: docker-build-deploy
+    runs-on: ubuntu-latest
+    needs: release
+
+    steps:
+      - name: login-to-the-docker-hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKENE }}
+    
