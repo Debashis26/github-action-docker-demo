@@ -6,80 +6,80 @@ on:
     branches:
       - master
 jobs:
-  # build-test:
-  #   runs-on: ubuntu-latest
-  #   container: node:20
+  build-test:
+    runs-on: ubuntu-latest
+    container: node:20
 
-  #   steps:
-  #    - name: Check Node.js version
-  #      run: node --version
+    steps:
+     - name: Check Node.js version
+       run: node --version
 
-  #    - name: Checkout code
-  #      uses: actions/checkout@v3
+     - name: Checkout code
+       uses: actions/checkout@v3
        
-  #    - name: Install node packeges
-  #      run: npm install
+     - name: Install node packeges
+       run: npm install
 
-  #    - name: Run node app
-  #      run: node index.js
+     - name: Run node app
+       run: node index.js
 
-  #    - name: Upload static site content
-  #      uses: actions/upload-artifact@v3
-  #      with:
-  #           name: my-artifact
-  #           path: .
+     - name: Upload static site content
+       uses: actions/upload-artifact@v3
+       with:
+            name: my-artifact
+            path: .
 
-  # release:
-  #   name: build-release
-  #   runs-on: ubuntu-latest
-  #   needs: build-test
-  #   container: node:20
+  release:
+    name: build-release
+    runs-on: ubuntu-latest
+    needs: build-test
+    container: node:20
 
-  #   steps:
-  #     - name: download static site content
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #          name: my-artifact
+    steps:
+      - name: download static site content
+        uses: actions/download-artifact@v3
+        with:
+           name: my-artifact
 
       
-  #     - name: List downloaded artifact contents
-  #       run: ls -R
+      - name: List downloaded artifact contents
+        run: ls -R
 
-  #     - name: Install zip
-  #       run: apt-get update && apt-get install -y zip
+      - name: Install zip
+        run: apt-get update && apt-get install -y zip
 
-  #     - name: compress static site content
-  #       uses: thedoctor0/zip-release@master
-  #       with:
-  #         filename: my-artifact-test.zip
+      - name: compress static site content
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: my-artifact-test.zip
         
-  #     - name: Create GitHub release
-  #       id: create-new-release
-  #       uses: actions/create-release@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.MY_PAT_TOKEN }}
-  #       with:
-  #         tag_name: ${{ github.run_number }}
-  #         release_name: Release ${{ github.run_number }}
+      - name: Create GitHub release
+        id: create-new-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_PAT_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
 
-  #     - name: Upload release project
-  #       uses: actions/upload-release-asset@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.MY_PAT_TOKEN }}
-  #       with:
-  #         upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-  #         asset_path: ./my-artifact-test.zip
-  #         asset_name: my-artifact-v${{ github.run_number }}.zip
-  #         asset_content_type: application/zip
+      - name: Upload release project
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_PAT_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: ./my-artifact-test.zip
+          asset_name: my-artifact-v${{ github.run_number }}.zip
+          asset_content_type: application/zip
     
   docker-build:
     name: docker-build-deploy
     runs-on: ubuntu-latest
-    # needs: release
+    needs: release
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # - name: Checkout code
+      #   uses: actions/checkout@v3
 
       - name: setup the docker buildx
         uses: docker/setup-buildx-action@v1
@@ -95,6 +95,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dockertest:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/dockertest:${{ github.run_number }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dockerexpressapp:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/dockerexpressapp:${{ github.run_number }}
           
           
